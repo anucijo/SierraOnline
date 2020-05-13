@@ -35,16 +35,15 @@ public class UserDetailsController {
 			produces = {MediaType.APPLICATION_JSON_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
 
-	public ResponseEntity<UserResponseModel> login(@RequestBody LoginModel login) {
-
+	public ResponseEntity<Object> login(@RequestBody LoginModel login) throws Exception {
 		System.out.println("login post mapping");
-		int x = 1/0;
-		UserResponseModel response = new UserResponseModel();
-		if(userService.getUserByUserNamePassword(login)) {
-			response.setUserName(login.getUserName());
-			response.setValidUser(true);
-		}
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		userService.getUserByUserNamePassword(login);
+
+//		UserResponseModel response = new UserResponseModel();
+//		response.setUserName(login.getUserName());
+//		response.setValidUser(true);
+
+		return new ResponseEntity<>(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK);
 	} 
 }
 

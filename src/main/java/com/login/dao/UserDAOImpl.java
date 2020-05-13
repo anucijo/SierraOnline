@@ -2,12 +2,12 @@ package com.login.dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.exception.InvalidLoginException;
 import com.login.entity.User;
 import com.login.model.LoginModel;
 
@@ -29,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean getUserByUserNamePassword(LoginModel login) {
+	public void getUserByUserNamePassword(LoginModel login) throws InvalidLoginException {
 		System.out.println("Inside DAO login username"+login.getUserName()+login.getPassword());	
 		
 		Query<User> query=sessionFactory.getCurrentSession()
@@ -38,6 +38,8 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("passWord", login.getPassword());
 
 		List<User> list=query.getResultList();
-		return null != list && !list.isEmpty();
+		if(null == list || list.isEmpty()) {
+			throw new InvalidLoginException("Invalid login");
+		}
 	}
 }
