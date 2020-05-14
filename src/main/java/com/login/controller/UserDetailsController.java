@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.login.model.LoginModel;
 import com.login.model.UserModel;
-import com.login.model.UserResponseModel;
 import com.login.service.UserService;
 
 @RestController
@@ -23,12 +22,10 @@ public class UserDetailsController {
 	@RequestMapping(value ="/addUser", method = RequestMethod.POST, 
 			produces = {MediaType.APPLICATION_JSON_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public UserResponseModel addUser(@RequestBody UserModel user) {
+	public ResponseEntity<Object> addUser(@RequestBody UserModel user) throws Exception{
 		System.out.println("adduser post mapping");
-
-		UserResponseModel response = new UserResponseModel();
-		response.setUserName(userService.addUser(user));
-		return response;
+		userService.addUser(user);
+		return new ResponseEntity<>(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value ="/login", method = RequestMethod.POST, 
