@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.login.dao")
 @EnableAutoConfiguration(exclude = { HibernateJpaAutoConfiguration.class})
 @PropertySource("classpath:application.properties")
 public class Config {
@@ -48,7 +50,7 @@ public class Config {
 	@Value("${entitymanager.packagesToScan}")
 	private String ENTITYMANAGER_PACKAGES_TO_SCAN;
 
-	@Bean
+	@Bean(name="entityManagerFactory")
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
@@ -60,6 +62,19 @@ public class Config {
 		sessionFactory.setHibernateProperties(hibernateProperties);
 		return sessionFactory;
 	}
+	
+	/*
+	 * @Bean(name="entityManagerFactory") public LocalSessionFactoryBean
+	 * sessionFactory1() { LocalSessionFactoryBean sessionFactory1 = new
+	 * LocalSessionFactoryBean(); sessionFactory1.setDataSource(dataSource());
+	 * sessionFactory1.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN); Properties
+	 * hibernateProperties = new Properties();
+	 * hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
+	 * hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
+	 * hibernateProperties.put("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
+	 * sessionFactory1.setHibernateProperties(hibernateProperties); return
+	 * sessionFactory1; }
+	 */
 
 	@Bean
 	public DataSource dataSource() {

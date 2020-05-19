@@ -22,7 +22,11 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void addUser(User user) {
+		System.out.println("DAO");
+		System.out.println("DAO:" + user.getUserName());
 		sessionFactory.getCurrentSession().save(user);
+		System.out.println("After DAO");
+		
 	}
 
 	@Override

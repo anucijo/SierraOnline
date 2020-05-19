@@ -21,17 +21,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(UserModel usermodel) throws DuplicateUserNameException  {
 		try {
+			System.out.println("Service");
 			User user = new User();
 			user.setFirstName(usermodel.getFirstName());
 			user.setLastName(usermodel.getLastName());
 			user.setPassword(usermodel.getPassword());
 			user.setRole(usermodel.getRole());
+			System.out.println("Service:" + usermodel.getUserName());
 			user.setUserName(usermodel.getUserName());	
 			userDAO.addUser(user);
+			System.out.println("After Service");
 		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
 			throw new DuplicateUserNameException("Duplicate UserName");
 		}catch(Exception e) {
-			throw new DuplicateUserNameException("Duplicate UserName");
+			e.printStackTrace();
+			throw new DuplicateUserNameException("Duplicate UserName11111");
 			//e.printStackTrace();
 		}
 	}
