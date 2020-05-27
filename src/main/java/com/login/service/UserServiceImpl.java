@@ -10,6 +10,7 @@ import com.exception.InvalidLoginException;
 import com.login.dao.UserDAO;
 import com.login.model.LoginModel;
 import com.login.model.UserModel;
+import com.login.model.UserResponseModel;
 import com.login.entity.User;
 
 @Service
@@ -37,7 +38,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void getUserByUserNamePassword(LoginModel login) throws InvalidLoginException {
-		userDAO.getUserByUserNamePassword(login);
+	public UserResponseModel getUserByUserNamePassword(LoginModel login) throws InvalidLoginException {
+		try {
+			User user = userDAO.getUserByUserNamePassword(login).get(0);
+
+			UserResponseModel responseModel = new UserResponseModel();
+			responseModel.setUserName(user.getUserName());
+			responseModel.setInstructor("Instructor".equalsIgnoreCase(user.getRole()));
+			return responseModel;
+		}catch(Exception e) {
+			throw new InvalidLoginException("Invalid username or password!");
+		}
 	}
 }

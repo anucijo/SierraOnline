@@ -2,14 +2,17 @@ package com.login.model;
 
 public class UserResponseModel {
 	private String userName;
-	public boolean isValidUser;
+	public boolean isInstructor;
 
-	public boolean isValidUser() {
-		return isValidUser;
+	
+	
+
+	public boolean isInstructor() {
+		return isInstructor;
 	}
 
-	public void setValidUser(boolean isValidUser) {
-		this.isValidUser = isValidUser;
+	public void setInstructor(boolean isInstructor) {
+		this.isInstructor = isInstructor;
 	}
 
 	public String getUserName() {
