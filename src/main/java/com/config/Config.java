@@ -19,7 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.login.dao")
+@EnableJpaRepositories(basePackages = "com.sierra.dao")
 @EnableAutoConfiguration(exclude = { HibernateJpaAutoConfiguration.class})
 @PropertySource("classpath:application.properties")
 public class Config {
